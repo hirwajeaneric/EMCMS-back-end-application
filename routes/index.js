@@ -1,3 +1,8 @@
+const express = require('express');
+const router = express.Router();
+const claimRoutes = require('../routes/claim.routes');
 
+router.use('/uploads/', express.static('./uploads'));
+router.use('/claims/', claimRoutes);
 
-app.use('/api/v1/emcms/uploads/', express.static('./uploads'));
+module.exports = router;

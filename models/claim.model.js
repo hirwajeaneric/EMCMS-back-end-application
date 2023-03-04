@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const claimSchema = new mongoose.Schema({
     fullName: { type: String, required: [ true, 'Full name must be provided' ] },
@@ -26,7 +27,7 @@ const claimSchema = new mongoose.Schema({
             otherAttachments: { type: String, required: false },
         }
     ],
-    totalClaimCost: { type: Double, required: true },
+    totalClaimCost: { type: Number, required: true },
     studentSignature: { type: String,  required: false },
     hodDeanSignature: {
         signature: { type: String, required: false },

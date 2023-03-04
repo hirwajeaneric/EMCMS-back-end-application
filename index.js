@@ -1,12 +1,13 @@
 require('dotenv').config();
+require('express-async-errors');
+
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const connection = require('./db');
-
+const connectDB = require('./db/connect');
+const notFoundMiddleware = require('./middlewares/not-found');
+const errorMiddleware = require('./middlewares/error-handler');
 const allroutes = require('./routes/index');
-
-connection();
 
 app.use(express.json());    
 app.use(cors());
@@ -14,5 +15,19 @@ app.use(cors());
 //Routes
 app.use('/api/v1/emcms/', allroutes);
 
-const port = process.env.PORT || 5050;
-app.listen(port, ()=> console.log(`Listening on port ${port}...`));
+app.use(notFoundMiddleware);
+app.use(errorMiddleware);
+
+const port = process.env.PORT || 5555
+
+const start = async () => {
+    try {
+        await connectDB(process.env.MONGO_URI);
+        app.listen(port, console.log(`Server is listening on port ${port}`))
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+start();
+

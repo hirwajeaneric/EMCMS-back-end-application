@@ -1,17 +1,8 @@
-const mongoose = require('mongoose');
+const express = require('express');
+const router = express.Router();
 
-module.exports = () => {
-    const connectionParams = {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    };
+const { testing } = require('../controllers/claim.controllers');
 
-    try {
-        mongoose.set('strictQuery', false);
-        mongoose.connect(process.env.DB, connectionParams);
-        console.log('Connected to database...');
-    } catch (error) {
-        console.log('Failed to connect to database...');
-    }
+router.route('/testing').get(testing);
 
-}
+module.exports = router;
