@@ -1,17 +1,6 @@
-const mongoose = require('mongoose');
+const ClaimModel = require('../models/claim.modal.js');
 
-module.exports = () => {
-    const connectionParams = {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    };
-
-    try {
-        mongoose.set('strictQuery', false);
-        mongoose.connect(process.env.DB, connectionParams);
-        console.log('Connected to database...');
-    } catch (error) {
-        console.log('Failed to connect to database...');
-    }
-
+const testing = async (req, res) => {
+    const claims = await ClaimModel.find({});
+    res.status(200).json({ nbHits: claims.length, claims })
 }
