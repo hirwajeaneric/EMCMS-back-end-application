@@ -1,11 +1,18 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    fullName: { type: String, required: [true, 'Full name must be provided'] },
-    registrationNumber: { type: String, required: false, },
-    email: { type: String, required: [true, 'Email must be provided'] },
+    fullName: { type: String, trim: true, required: [true, 'Full name must be provided'] },
+    registrationNumber: { type: String, required: false, maxlength: [5, 'Registraton number must be 5 digits long.'], minlength: [5, 'Registraton number must be 5 digits long.'], },
+    email: { type: String, trim: true, required: [true, 'Email must be provided'] },
     phone: { type: String, required: [true, 'Phone number must be provided'] },
-    role: { type: String, required: false, },
+    role: { 
+        type: String, 
+        required: false,
+        enum: {
+            values: ['Student', 'HOD', 'Dean', 'Accountant', 'Registration officer', 'Examination officer', 'Lecturer', 'Director of student discipline'],
+            message: '{VALUE} is not supported as a role.'
+        } 
+    },
     password: { type: String, required: [true, 'Password must be provided'] },
     token: { type: String, required: false },
     faculty: { type: String, required: false },

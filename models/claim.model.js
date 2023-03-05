@@ -2,8 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const claimSchema = new mongoose.Schema({
-    fullName: { type: String, required: [ true, 'Full name must be provided' ] },
-    registrationNumber: { type: String, required: [ true, 'Registration number must be provided' ] },
+    fullName: { type: String, required: [ true, 'Full name must be provided' ], trim: true },
+    registrationNumber: { 
+        type: String, 
+        required: [ true, 'Registration number must be provided'], 
+        trim: true, 
+        maxlength: [5, 'Registration number must be 5 digits long.'], 
+        minlength: [5, 'Registration number must be 5 digits long.'], 
+    },
     email: { type: String, required: [ true, 'Email must be provided' ] },
     phone: { type: String, required: [ true, 'Phone number must be provided' ] },
     faculty: { type: String, required: [ true, 'Faculty must be provided' ] },
@@ -30,32 +36,32 @@ const claimSchema = new mongoose.Schema({
     totalClaimCost: { type: Number, required: true },
     studentSignature: { type: String,  required: false },
     hodDeanSignature: {
-        signature: { type: String, required: false },
+        signature: { type: Boolean, default: false, required: false },
         comment: { type: String, required: false },
         dateOfSignature: { type: Date, required: false },  
     }, 
     lecturerSignature: {
-        signature: { type: String, required: false },
+        signature: { type: Boolean, default: false, required: false },
         comment: { type: String, required: false },
         dateOfSignature: { type: Date, required: false },  
     },
     registrationOfficerSignature: {
-        signature: { type: String, required: false },
+        signature: { type: Boolean, default: false, required: false },
         comment: { type: String, required: false },
         dateOfSignature: { type: Date, required: false },  
     },
     studentDisciplineOfficerSignature: {
-        signature: { type: String, required: false },
+        signature: { type: Boolean, default: false, required: false },
         comment: { type: String, required: false },
         dateOfSignature: { type: Date, required: false },  
     },
     accountantSignature: {
-        signature: { type: String, required: false },
+        signature: { type: Boolean, default: false, required: false },
         comment: { type: String, required: false },
         dateOfSignature: { type: Date, required: false },  
     },
     examinationOfficerSignature: {
-        signature: { type: String, required: false },
+        signature: { type: Boolean, default: false, required: false },
         comment: { type: String, required: false },
         dateOfSignature: { type: Date, required: false },  
     },
