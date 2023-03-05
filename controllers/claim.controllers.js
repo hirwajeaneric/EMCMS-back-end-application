@@ -13,7 +13,8 @@ const createClaim = asyncWrapper(async (req, res) => {
 });
 
 const getClaims = asyncWrapper(async(req, res, next) => {
-
+    const claims = await ClaimModel.find({})
+    res.status(200).json({ nbHits: claims.length, claims })
 });
 
 const findById = asyncWrapper(async(req, res, next) => {
@@ -44,4 +45,4 @@ const updateClaims = asyncWrapper(async(req, res, next) => {
     
 });
 
-module.exports = { testing }
+module.exports = { testing, createClaim, getClaims }

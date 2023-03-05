@@ -23,28 +23,27 @@ const claimSchema = new mongoose.Schema({
             credits: { type: Number, required: [true, 'Credits must be provided'] },
             lecturer: { 
                 id: { type: Schema.Types.ObjectId, required: 'true', ref: 'User' },
-                name: { type: String, required: [true, 'Course Lecturer must be provided']}
+                name: { type: String, required: [true, 'Course Lecturer must be provided']},
+                comment: { type: String, required: false },
+                attachment: { type: String, required: false },
+                signature: { type: Boolean, default: false, required: false },
+                dateOfSignature: { type: Date, required: false },
             },
             group: { type: String, required: [true, 'Course group attended must be provided'] },
             reason: { type: String, required: [true, 'Reason for missing the exam must be provided'] },
             examPermit: { type: String, required: [true, 'Exam permit card must be provided'] },
             proofOfTuitionPayment: { type: String, required: [true, 'A registration form that proves that you have submitted full semester payment must be provided'] },
-            proofOfclaimPayment: { type: String, required: false },
+            proofOfClaimPayment: { type: String, required: false },
             otherAttachments: { type: String, required: false },
         }
     ],
     totalClaimCost: { type: Number, required: true },
-    studentSignature: { type: String,  required: false },
+    studentSignature: { type: Boolean, default: false, required: false },
     hodDeanSignature: {
         signature: { type: Boolean, default: false, required: false },
         comment: { type: String, required: false },
         dateOfSignature: { type: Date, required: false },  
     }, 
-    lecturerSignature: {
-        signature: { type: Boolean, default: false, required: false },
-        comment: { type: String, required: false },
-        dateOfSignature: { type: Date, required: false },  
-    },
     registrationOfficerSignature: {
         signature: { type: Boolean, default: false, required: false },
         comment: { type: String, required: false },

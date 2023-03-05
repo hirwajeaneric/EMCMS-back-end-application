@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const courseSchema = new mongoose.Schema({
     code: { type: String, required: [true, 'Course code must be provided'] },
@@ -17,7 +18,12 @@ const courseSchema = new mongoose.Schema({
         {
             academicYear: { type: String, required: false },
             semester: { type: String, required: false },
-            lecturers: { type: Array, required: false },
+            lecturers: [
+                { 
+                    lecturerId: { type: Schema.Types.ObjectId, required: false, ref: "User" },
+                    name:  { type: String, required: false },
+                }
+            ],
             groups: { type: Array, required: false },
         }
     ],
