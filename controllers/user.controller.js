@@ -28,37 +28,27 @@ const getUsers = asyncWrapper(async(req, res, next) => {
 });
 
 const findById = asyncWrapper(async(req, res, next) => {
-    
+    const user = await UserModel.findById(req.query.id)
+    res.status(200).json({ user })
 });
 
 const findByRegistrationNumber = asyncWrapper(async(req, res, next) => {
+    const regNo = req.query.registrationNumber;
+    const user = await UserModel.find({ registrationNumber: regNo })
+    
+    if (!user) {
+        return next(createCustomError(`No user with registration number: ${regNo}`, 404))
+    }
+
+    res.status(200).json({ user });
+});
+
+const deleteUser = asyncWrapper(async(req, res, next) => {
     
 });
 
-const findByFaculty = asyncWrapper(async(req, res, next) => {
+const updateUser = asyncWrapper(async(req, res, next) => {
     
 });
 
-const findByDepartment = asyncWrapper(async(req, res, next) => {
-    
-});
-
-const findByCourse = asyncWrapper(async(req, res, next) => {
-    
-});
-
-const deleteUsers = asyncWrapper(async(req, res, next) => {
-    
-});
-
-const updateUsers = asyncWrapper(async(req, res, next) => {
-    
-});
-
-module.exports = { 
-    testing, 
-    createUser, 
-    signIn,
-    signUp,
-    getUsers, 
-}
+module.exports = { testing, createUser, signIn, signUp, getUsers, findById, findByRegistrationNumber, deleteUser, updateUser }
