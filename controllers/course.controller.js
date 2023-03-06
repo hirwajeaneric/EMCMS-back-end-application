@@ -1,6 +1,5 @@
 const CourseModel = require('../models/course.model');
 const asyncWrapper = require('../middlewares/async');
-const { createCustomError } = require('../errors/custom-errors')
 
 const testing = asyncWrapper(async (req, res) => {
     const courses = await CourseModel.find({});

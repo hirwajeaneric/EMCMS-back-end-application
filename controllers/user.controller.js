@@ -1,6 +1,6 @@
 const UserModel = require('../models/user.model');
 const asyncWrapper = require('../middlewares/async');
-const { createCustomError } = require('../errors/custom-errors')
+const { NotFoundError } = require('../errors')
 
 const testing = asyncWrapper(async (req, res) => {
     const users = await UserModel.find({});
@@ -28,18 +28,24 @@ const getUsers = asyncWrapper(async(req, res, next) => {
 });
 
 const findById = asyncWrapper(async(req, res, next) => {
-    const user = await UserModel.findById(req.query.id)
-    res.status(200).json({ user })
+    const userId = req.query.id;
+    const user = await UserModel.findById(userId)
+
+    if (!user || user === null ) {
+        throw new NotFoundError(`No user with ID: ${userId} found!`);
+    }
+
+    res.status(200).json({ user });
 });
 
 const findByRegistrationNumber = asyncWrapper(async(req, res, next) => {
     const regNo = req.query.registrationNumber;
     const user = await UserModel.find({ registrationNumber: regNo })
     
-    if (!user) {
-        return next(createCustomError(`No user with registration number: ${regNo}`, 404))
+    if (!user || user.length === 0 ) {
+        throw new NotFoundError(`No user with registration number: ${regNo}`);
     }
-
+    
     res.status(200).json({ user });
 });
 

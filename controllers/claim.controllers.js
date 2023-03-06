@@ -1,6 +1,5 @@
 const ClaimModel = require('../models/claim.model');
 const asyncWrapper = require('../middlewares/async');
-const { createCustomError } = require('../errors/custom-errors')
 
 const testing = asyncWrapper(async (req, res) => {
     const claims = await ClaimModel.find({});
